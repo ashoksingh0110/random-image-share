@@ -114,8 +114,6 @@ export default function App() {
         <div
           className="box"
           style={{
-            border: "5px solid black",
-            borderRadius: "10px",
             position: "absolute",
           }}
         >
@@ -125,7 +123,7 @@ export default function App() {
               <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
-                open={open}               
+                open={open}
               >
                 <BootstrapDialogTitle
                   id="customized-dialog-title"
@@ -133,15 +131,15 @@ export default function App() {
                 >
                   Preview
                 </BootstrapDialogTitle>
-                <DialogContent dividers sx={{overflowY:"hidden"}}>
+                <DialogContent dividers sx={{ overflowY: "hidden" }}>
                   <CardMedia
                     component="img"
-                    sx={{ height:"100%", width:"100%"}}
+                    sx={{ height: "100%", width: "100%" }}
                     src={imageUrl}
                     alt="Random image"
                   />
                 </DialogContent>
-                <DialogActions style={{justifyContent: "flex-start"}}>
+                <DialogActions style={{ justifyContent: "flex-start" }}>
                   <Button onClick={shareToFacebook}>
                     <FacebookIcon
                       fontSize="large"
@@ -161,7 +159,6 @@ export default function App() {
                     Cancel
                   </Button>
                 </DialogActions>
-
               </BootstrapDialog>
               <Backdrop
                 sx={{
@@ -169,24 +166,24 @@ export default function App() {
                   zIndex: (theme) => theme.zIndex.drawer + 1,
                 }}
                 open={openbackdrop}
-                onClick={handleCloseBackdrop}
+                // onClick={handleCloseBackdrop}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
             </div>
           </div>
-          <div
-            className="text-center"
-            style={{ position: "relative", bottom: "-5%" }}
-          >
-            <Button variant="outlined" onClick={handleClickOpen}>
-              Share
-              <ShareIcon color="primary"></ShareIcon>
-            </Button>
-            <Button sx={{ m: 1 }} variant="outlined" onClick={getRandomImage}>
-              Refresh
-            </Button>
-          </div>
+        <div
+          className="text-center btns"
+          style={{ position: "relative", bottom: "-45%" }}
+        >
+          <Button variant="outlined" onClick={handleClickOpen}>
+            Share
+            <ShareIcon color="primary"></ShareIcon>
+          </Button>
+          <Button sx={{ m: 1 }} variant="outlined" onClick={getRandomImage}>
+            Refresh
+          </Button>
+        </div>
         </div>
       </div>
     </>
