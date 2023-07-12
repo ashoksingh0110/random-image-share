@@ -92,21 +92,23 @@ export default function App() {
 
   //Text to share with Image Url
   const shareText = encodeURIComponent("Check out this random image !");
+  const shareUrl = encodeURIComponent(window.location.href);
+  const shareImage = encodeURIComponent(imageUrl);
+  
   //Functions to share image url in whatsapp,facebook,twitter
-  function shareToWhatsapp() {
-    window.open(`whatsapp://send?text=${shareText} ${imageUrl} `, "_blank");
-  }
-  function shareToFacebook() {
+  const shareToWhatsapp = () => {
+    window.open(`whatsapp://send?text=${shareText} ${shareUrl} `, "_blank");
+  };
+
+  const shareToFacebook = () => {
     window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${imageUrl}`,
+      `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
       "_blank"
     );
-  }
-  function shareToTwitter() {
-    window.open(
-      `https://twitter.com/intent/tweet?text=${shareText}&url=${imageUrl}`,
-      "_blank"
-    );
+  };
+
+  function shareToTwitter(){
+    window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`, '_blank');
   }
   return (
     <>
@@ -131,7 +133,7 @@ export default function App() {
                 >
                   Preview
                 </BootstrapDialogTitle>
-                <DialogContent dividers sx={{ overflowY: "hidden" }}>
+                <DialogContent dividers>
                   <CardMedia
                     component="img"
                     sx={{ height: "100%", width: "100%" }}
@@ -172,18 +174,18 @@ export default function App() {
               </Backdrop>
             </div>
           </div>
-        <div
-          className="text-center btns"
-          style={{ position: "relative", bottom: "-45%" }}
-        >
-          <Button variant="outlined" onClick={handleClickOpen}>
-            Share
-            <ShareIcon color="primary"></ShareIcon>
-          </Button>
-          <Button sx={{ m: 1 }} variant="outlined" onClick={getRandomImage}>
-            Refresh
-          </Button>
-        </div>
+          <div
+            className="text-center btns"
+            style={{ position: "relative", bottom: "-45%" }}
+          >
+            <Button variant="outlined" onClick={handleClickOpen}>
+              Share
+              <ShareIcon color="primary"></ShareIcon>
+            </Button>
+            <Button sx={{ m: 1 }} variant="outlined" onClick={getRandomImage}>
+              Refresh
+            </Button>
+          </div>
         </div>
       </div>
     </>
