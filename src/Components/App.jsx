@@ -13,8 +13,6 @@ import ShareIcon from "@mui/icons-material/Share";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 
 import "../assets/css/style.css";
 
@@ -57,12 +55,8 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function App() {
-  var [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [open, setOpen] = React.useState(false);
-  const [openbackdrop, setOpenbackdrop] = React.useState(false);
-  useEffect(() => {
-    getRandomImage();
-  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,123 +65,105 @@ export default function App() {
     setOpen(false);
   };
 
-  const handleCloseBackdrop = () => {
-    setOpenbackdrop(false);
-  };
-  const handleOpenBackdrop = () => {
-    setOpenbackdrop(true);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const imageParam = urlParams.get("image");
+    if (imageParam) {
+      setImageUrl(decodeURIComponent(imageParam));
+    }
+  }, []);
+
+  const generateRandomImage = () => {
+    const randomId = Math.floor(Math.random() * 1000);
+    const url = `https://picsum.photos/id/${randomId}/600/600`;
+    setImageUrl(url);
+    window.history.pushState(null, "", `?image=${encodeURIComponent(url)}`);
   };
 
-  function getRandomImage() {
-    handleOpenBackdrop();
-    // API call that returns a random image URL
-    fetch("https://picsum.photos/600")
-      .then((response) => {
-        const imageUrl = response.url;
-        setImageUrl(imageUrl);
-        handleCloseBackdrop();
-      })
-      .catch((error) => console.log(error));
-  }
-
-  //Text to share with Image Url
-  const shareText = encodeURIComponent("Check out this random image !");
-  const shareUrl = encodeURIComponent(window.location.href);
-  const shareImage = encodeURIComponent(imageUrl);
-  
-  //Functions to share image url in whatsapp,facebook,twitter
+  const shareText = encodeURIComponent("Check out this random image!");
+  const shareUrl = `${window.location.href}`;
   const shareToWhatsapp = () => {
-    window.open(`whatsapp://send?text=${shareText} ${shareUrl} `, "_blank");
-  };
-
-  const shareToFacebook = () => {
     window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
+      `https://api.whatsapp.com/send?text=${encodeURIComponent(shareUrl)}`,
       "_blank"
     );
   };
 
-  function shareToTwitter(){
-    window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`, '_blank');
+  function shareToFacebook() {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        shareUrl
+      )}`,
+      "_blank"
+    );
+  }
+
+  function shareToTwitter() {
+    window.open(
+      `https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(
+        shareUrl
+      )}`,
+      "_blank"
+    );
   }
   return (
-    <>
-      <div className="main">
-        <div
-          className="box"
-          style={{
-            position: "absolute",
-          }}
-        >
-          <div className="div-img">
-            <img src={imageUrl} height="100%" width="100%" alt="Random Image" />
-            <div>
-              <BootstrapDialog
-                onClose={handleClose}
-                aria-labelledby="customized-dialog-title"
-                open={open}
-              >
-                <BootstrapDialogTitle
-                  id="customized-dialog-title"
-                  onClose={handleClose}
-                >
-                  Preview
-                </BootstrapDialogTitle>
-                <DialogContent dividers>
-                  <CardMedia
-                    component="img"
-                    sx={{ height: "100%", width: "100%" }}
-                    src={imageUrl}
-                    alt="Random image"
-                  />
-                </DialogContent>
-                <DialogActions style={{ justifyContent: "flex-start" }}>
-                  <Button onClick={shareToFacebook}>
-                    <FacebookIcon
-                      fontSize="large"
-                      color="primary"
-                    ></FacebookIcon>
-                  </Button>
-                  <Button onClick={shareToWhatsapp}>
-                    <WhatsAppIcon
-                      fontSize="large"
-                      color="success"
-                    ></WhatsAppIcon>
-                  </Button>
-                  <Button onClick={shareToTwitter}>
-                    <TwitterIcon fontSize="large" color="primary"></TwitterIcon>
-                  </Button>
-                  <Button autoFocus onClick={handleClose}>
-                    Cancel
-                  </Button>
-                </DialogActions>
-              </BootstrapDialog>
-              <Backdrop
-                sx={{
-                  color: "#fff",
-                  zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}
-                open={openbackdrop}
-                // onClick={handleCloseBackdrop}
-              >
-                <CircularProgress color="inherit" />
-              </Backdrop>
-            </div>
-          </div>
-          <div
-            className="text-center btns"
-            style={{ position: "relative", bottom: "-45%" }}
+    <div
+      className="container"
+      style={{ border: "2px solid black", borderRadius: "5px" }}
+    >
+      <div
+        className="image-container"
+      >
+        {imageUrl && (
+          <img src={imageUrl} alt="Random" className="random-image" />
+        )}
+        <div>
+          <BootstrapDialog
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={open}
           >
-            <Button variant="outlined" onClick={handleClickOpen}>
-              Share
-              <ShareIcon color="primary"></ShareIcon>
-            </Button>
-            <Button sx={{ m: 1 }} variant="outlined" onClick={getRandomImage}>
-              Refresh
-            </Button>
-          </div>
+            <BootstrapDialogTitle
+              id="customized-dialog-title"
+              onClose={handleClose}
+            >
+              Preview
+            </BootstrapDialogTitle>
+            <DialogContent dividers>
+              <CardMedia
+                component="img"
+                sx={{ height: "100%", width: "100%" }}
+                src={imageUrl}
+                alt="Random image"
+              />
+            </DialogContent>
+            <DialogActions style={{ justifyContent: "flex-start" }}>
+              <Button onClick={shareToFacebook}>
+                <FacebookIcon fontSize="large" color="primary"></FacebookIcon>
+              </Button>
+              <Button onClick={shareToWhatsapp}>
+                <WhatsAppIcon fontSize="large" color="success"></WhatsAppIcon>
+              </Button>
+              <Button onClick={shareToTwitter}>
+                <TwitterIcon fontSize="large" color="primary"></TwitterIcon>
+              </Button>
+              <Button autoFocus onClick={handleClose}>
+                Cancel
+              </Button>
+            </DialogActions>
+          </BootstrapDialog>
         </div>
       </div>
-    </>
+      <div className="button-container">
+        <button onClick={generateRandomImage} id="btn">
+          {imageUrl ? "Refresh" : "Generate Image"}
+        </button>
+        {imageUrl && (
+          <button onClick={handleClickOpen}>
+            Share<ShareIcon color="light"></ShareIcon>
+          </button>
+        )}
+      </div>
+    </div>
   );
 }

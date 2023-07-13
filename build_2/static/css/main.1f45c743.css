@@ -1,0 +1,2 @@
+.main{align-items:center;display:flex;height:100vh;justify-content:center}.box{border:5px solid #000;border-radius:10px;width:80%}.box,.div-img{position:relative}.div-img{width:100%}.div-img img{height:auto;object-fit:cover;width:100%}@media (max-width:1980px){.box{width:35%}}@media (max-width:1080px){.box{width:40%}}@media (max-width:900px){.box{width:60%}}@media (max-width:768px){.box{width:75%}}@media (max-width:480px){.box{width:95%}}
+/*# sourceMappingURL=main.1f45c743.css.map*/

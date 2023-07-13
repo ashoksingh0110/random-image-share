@@ -1,28 +1,18 @@
 # Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-
-
-
+==================================================================================================
+## Deployed App Url Link - random-image-share.netlify.app
+==================================================================================================
 
 ## To run 
----------------------------------------------------
+--------------------------------------------------------------------------------------------------
 In the project directory, you can run:
 1. Download Project 
 In the project directory, you can run:                               
 2. Run command ---> npm install         
 3. To run App ----> npm start              
----------------------------------------------------
-
-## Deployed App Url Link -
-https://64a9444d3571ea7035653104--fanciful-gelato-dc6d9b.netlify.app/
-
-
-
-
-
-
-
+---------------------------------------------------------------------------------------------------
 
 ### `npm start`
 
